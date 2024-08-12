@@ -2,9 +2,8 @@ name: Build and Release
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches:
+      - main
 
 jobs:
   build:
@@ -14,9 +13,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y dos2unix zip
+
     - name: Generate Resume
       run: |
-        ./gen-resumes.sh ./Resume-Template-1.tex ./companies.txt
+        dos2unix ./template.tex ./companies.tex
+        ./gen-resumes.sh ./template.tex ./companies.tex
+
+    - name: Zip Generated Files
+      run: |
+        zip -r resume_files.zip ./output/
 
     - name: Create Release
       id: create_release
@@ -29,10 +38,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Upload Resume to Release
+    - name: Upload Resume Zip to Release
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./output/resume.pdf
-        asset_name: resume.pdf
-        asset_content_type: application/pdf
+        asset_path: ./resume_files.zip
+        asset_name: resume_files.zip
+        asset_content_type: application/zip
