@@ -21,8 +21,8 @@ jobs:
 
     - name: Generate Resume
       run: |
-        dos2unix ./template.tex ./companies.tex
-        ./gen-resumes.sh ./template.tex ./companies.tex
+        dos2unix ./Resume-Template-1.tex ./companies.txt
+        ./gen-resumes.sh ./Resume-Template-1.tex ./companies.txt
 
     - name: Zip Generated Files
       run: |
