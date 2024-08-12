@@ -19,18 +19,13 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y dos2unix zip
         
-
     - name: Generate Resume
       run: |
         dos2unix ./Resume-Template-1.tex ./companies.txt
         ./gen-resumes.sh ./Resume-Template-1.tex ./companies.txt
-
-    - name: Zip Generated Files
-      run: |
-        zip -r resume_files.zip ./Final\ Resumes/
-
-    - name: Upload Artifacts
+        
+    - name: Upload Resume PDFs as Artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: resume-files
-        path: resume_files.zip
+        name: resume-pdf
+        path: ./Final\ Resumes/*.pdf
