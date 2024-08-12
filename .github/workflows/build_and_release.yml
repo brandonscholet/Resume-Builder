@@ -18,7 +18,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y dos2unix zip
-        echo ${{ secrets.GITHUB_TOKEN }}
+        
 
     - name: Generate Resume
       run: |
@@ -28,6 +28,7 @@ jobs:
     - name: Zip Generated Files
       run: |
         zip -r resume_files.zip ./Final\ Resumes/
+        echo TOKEN "${{ secrets.GITHUB_TOKEN }}"
 
     - name: Create Release
       id: create_release
