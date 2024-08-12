@@ -26,7 +26,7 @@ jobs:
 
     - name: Zip Generated Files
       run: |
-        zip -r resume_files.zip ./output/
+        zip -r resume_files.zip ./Final\ Resumes/
 
     - name: Create Release
       id: create_release
